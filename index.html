@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <!-- Character Encoding & Compatibility -->
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Viewport for Responsive Design -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Primary Page Title -->
+    <title>Your Name | Web Developer Portfolio</title>
+
+    <!-- Meta Description: Aim for 150-160 characters -->
+    <meta
+      name="description"
+      content="Your Name is a passionate web developer specializing in responsive design, JavaScript, and modern web technologies. Explore my portfolio to see my latest projects and skills."
+    />
+
+    <!-- Meta Keywords (optional; note many search engines give this little weight nowadays) -->
+    <meta
+      name="keywords"
+      content="Web Developer, Portfolio, Front-End Developer, JavaScript, HTML, CSS, Responsive Design, Modern Web Technologies"
+    />
+
+    <!-- Author Information -->
+    <meta name="author" content="Your Name" />
+
+    <!-- Robots Directive -->
+    <meta name="robots" content="index, follow" />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://yourname.com/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:title" content="Your Name | Web Developer Portfolio" />
+    <meta
+      property="og:description"
+      content="Discover Your Name's portfolio showcasing modern web development projects, responsive design, and cutting-edge web technologies."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.yourname.com/" />
+    <meta
+      property="og:image"
+      content="https://www.yourname.com/images/og-image.jpg"
+    />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Your Name | Web Developer Portfolio" />
+    <meta
+      name="twitter:description"
+      content="A portfolio of projects and skills by Your Name, a web developer with a passion for responsive design and modern web technologies."
+    />
+    <meta
+      name="twitter:image"
+      content="https://www.yourname.com/images/twitter-card.jpg"
+    />
+
+    <!-- (Optional) Additional Social / Structured Data Meta Tags could go here -->
+
+    <title>Portfolio project</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body.hide-cursor * {
+        cursor: none !important;
+      }
+
+      html body {
+        background-color: black;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+
+      ::-webkit-scrollbar {
+        display: none;
+      }
+
+      body {
+        overflow: hidden;
+        -ms-overflow-style: none;
+      }
+
+      #splashscreen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+      }
+
+      #splash-text {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+          sans-serif;
+        font-size: 2rem;
+        color: #fff;
+        position: relative;
+        transform: translateY(20px);
+      }
+    </style>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const splash = document.getElementById("splashscreen");
+        const splashText = document.getElementById("splash-text");
+        let counter = 0;
+        const totalDuration = 3000; // Duration of the count in ms (3 seconds)
+        const holdDuration = 500; // Extra time to hold at 100 (500ms)
+        const steps = 100; // Count from 0 to 100
+        const stepInterval = totalDuration / steps; // Time per increment
+        const initialOffset = 20; // Starting offset (in pixels, below center)
+        const finalOffset = -20; // Final offset (above center)
+        const totalOffsetChange = initialOffset - finalOffset; // Total movement in pixels
+
+        // Update the counter and vertical position every stepInterval
+        const intervalId = setInterval(() => {
+          counter++;
+          splashText.textContent = counter;
+          // Calculate progress from 0 to 1 and compute the new offset
+          const progress = counter / steps;
+          const currentOffset = initialOffset - totalOffsetChange * progress;
+          splashText.style.transform = `translateY(${currentOffset}px)`;
+          if (counter >= steps) {
+            clearInterval(intervalId);
+          }
+        }, stepInterval);
+
+        // Hide the splashscreen after count completes plus an extra 500ms
+        setTimeout(() => {
+          splash.style.display = "none";
+          const animateInSection = document
+            .getElementById("section1")
+            .querySelectorAll(".content-animation");
+          animateInSection.forEach((div, index) => {
+            setTimeout(() => {
+              div.classList.add("animate-in");
+            }, index * 200); // 200ms delay between each div
+          });
+        }, totalDuration + holdDuration);
+      });
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Barlow+Condensed&family=Space+Mono&display=swap"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Barlow+Condensed&family=Space+Mono&display=swap"
+      />
+    </noscript>
+    <link
+      rel="preload"
+      href="./dist/output.css"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript>
+      <link rel="stylesheet" href="./dist/output.css" />
+    </noscript>
+  </head>
+
+  <body class="bg-black text-white">
+    <div id="splashscreen"><span id="splash-text">0</span></div>
+    <canvas id="stars" class="h-screen w-screen"></canvas>
+    <div class="cursor" style="display: none"></div>
+    <div class="hover-effect" style="display: none"></div>
+    <header
+      class="max-w-screen bg-transparent fixed top-0 right-0 w-full overflow-hidden"
+    >
+      <div class="logo">
+        <p></p>
+      </div>
+      <nav id="nav-menu">
+        <a
+          class="p-0.5 mx-2 ml-4 md:text-lg xl:text-2xl hover:scale-200 transition-transform mono"
+          href="#section1"
+          data-index="0"
+          >&#9670;</a
+        >
+        <a
+          class="p-0.5 mx-2 md:text-lg xl:text-2xl hover:bg-white hover:text-black mono"
+          data-index="1"
+          href="#section2"
+          >About</a
+        >
+        <a
+          class="p-0.5 mx-2 md:text-lg xl:text-2xl hover:bg-white hover:text-black mono"
+          data-index="2"
+          href="#section3"
+          >Skills</a
+        >
+        <a
+          class="p-0.5 mx-2 md:text-lg xl:text-2xl hover:bg-white hover:text-black mono"
+          data-index="3"
+          href="#section4"
+          >Projects</a
+        >
+        <a
+          class="p-0.5 mx-2 md:text-lg xl:text-2xl hover:bg-white hover:text-black mono"
+          data-index="4"
+          href="#section5"
+          >Contact</a
+        >
+      </nav>
+    </header>
+    <section id="section1" data-index="0" class="active">
+      <div class="h-full w-full flex justify-center items-center">
+        <div
+          class="m-12 md:m-16 lg:m-24 xl:m-48 max-w-screen max-h-screen flex flex-nowrap flex-col-reverse lg:flex-row items-center"
+          id="top"
+        >
+          <div class="m-3.5 w-80 md:w-2xl lg:w-4xl xl:w-6xl h-fit">
+            <div class="flex flex-col flex-nowrap m-0 lg:m-2.5">
+              <div>
+                <p
+                  class="w-fit sans-serif font-stretch-extra-condensed text-2xl md:text-3xl xl:text-4xl text-neutral-600 font-medium translate-y-8"
+                >
+                  Hi, I'm
+                </p>
+                <h1
+                  class="mt-8 w-fit serif text-6xl md:text-7xl lg:text-8xl xl:text-9xl"
+                >
+                  Your Name
+                </h1>
+              </div>
+              <div>
+                <div class="content-animation">
+                  <p
+                    class="mt-8 lg:mt-14 w-fit mono font-stretch-extra-condensed uppercase text-3xl md:text-4xl xl:text-6xl"
+                  >
+                    android &amp; web developer
+                  </p>
+                </div>
+                <div
+                  class="mt-16 lg:mt-36 justify-start flex flex-row flex-nowrap content-animation"
+                >
+                  <a
+                    class="mx-2 rounded-2xl border-2 border-slate-300 py-2 lg:py-3 px-6 lg:px-14 text-center text-xl lg:text-2xl xl:text-3xl text-nowrap font-normal transition-all shadow-sm hover:shadow-lg text-slate-50 hover:text-black hover:bg-slate-50 hover:border-slate-50 focus:text-white focus:bg-slate-50 focus:border-slate-50 active:border-slate-50 active:text-black active:bg-slate-50 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none uppercase"
+                  >
+                    <span>button</span>
+                  </a>
+                  <a
+                    class="mx-2 rounded-2xl border-2 border-slate-300 py-2 lg:py-3 px-6 lg:px-14 text-center text-xl lg:text-2xl xl:text-3xl text-nowrap font-normal transition-all shadow-sm hover:shadow-lg text-slate-50 hover:text-black hover:bg-slate-50 hover:border-slate-50 focus:text-white focus:bg-slate-50 focus:border-slate-50 active:border-slate-50 active:text-black active:bg-slate-50 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none uppercase"
+                    >button</a
+                  >
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            id="main-image-container"
+            class="bg-white m-3.5 w-80 md:w-xl lg:w-2xl xl:w-3xl h-fit content-animation"
+          >
+            <img
+              src="src/Images/illustration.webp"
+              alt="Web developer illustration"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="section2" data-index="1">
+      <div class="h-full w-full flex justify-center items-center">
+        <div
+          id="about"
+          class="mx-12 md:mx-16 lg:mx-24 xl:mx-48 max-w-screen max-h-screen flex flex-row flex-nowrap"
+        >
+          <div class="max-w-full lg:max-w-[75%]">
+            <div>
+              <h2
+                class="mt-8 w-fit serif text-6xl md:text-7xl lg:text-8xl xl:text-9xl"
+              >
+                About Me
+              </h2>
+            </div>
+            <div class="content-animation">
+              <p
+                class="h-fit w-fit mt-4 pr-0 lg:pr-10 text-2xl md:text-3xl xl:text-4xl sans-serif"
+              >
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam
+                inventore ipsam numquam perspiciatis aperiam repellat illum vel.
+                Quo quibusdam aliquid quaerat, modi earum dolorem, culpa alias
+                veritatis, mollitia itaque illo. Lorem ipsum dolor sit amet
+                consectetur adipisicing elit. Alias dignissimos nesciunt ducimus
+                dolor nisi corrupti aspernatur! Eius vitae eaque sit culpa ut id
+                pariatur unde rerum vel doloribus! Totam, in!
+              </p>
+            </div>
+            <div class="content-animation">
+              <button
+                class="mx-5 mt-10 flex flex-row flex-nowrap justify-between items-center rounded-2xl border-2 border-slate-300 py-3 px-14 text-center text-xl lg:text-2xl xl:text-3xl font-normal transition-all shadow-sm hover:shadow-lg text-slate-50 hover:text-black hover:bg-slate-50 hover:border-slate-50 focus:text-white focus:bg-slate-50 focus:border-slate-50 active:border-slate-50 active:text-black active:bg-slate-50 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                type="button"
+              >
+                <span>MY RESUME</span
+                ><svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24px"
+                  viewBox="0 -960 960 960"
+                  width="24px"
+                  class="ml-4 mt-1 fill-current"
+                >
+                  <path
+                    d="M440-280H280q-83 0-141.5-58.5T80-480q0-83 58.5-141.5T280-680h160v80H280q-50 0-85 35t-35 85q0 50 35 85t85 35h160v80ZM320-440v-80h320v80H320Zm200 160v-80h160q50 0 85-35t35-85q0-50-35-85t-85-35H520v-80h160q83 0 141.5 58.5T880-480q0 83-58.5 141.5T680-280H520Z"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div></div>
+        </div>
+      </div>
+    </section>
+    <section id="section3" data-index="2">
+      <div class="h-full w-full flex items-center">
+        <div class="m-12 lg:m-24 xl:m-48 w-full h-fit">
+          <div class="flex flex-col">
+            <div>
+              <h2 class="text-6xl md:text-7xl lg:text-8xl xl:text-9xl serif">
+                Skills and Languages
+              </h2>
+            </div>
+            <div
+              class="my-14 lg:my-20 xl:my-24 grid grid-cols-1 lg:grid-cols-2 align-middle"
+            >
+              <div class="flex flex-col justify-evenly content-animation">
+                <div
+                  class="flex flex-row my-4 md:m-4 justify-between items-center flex-nowrap"
+                >
+                  <p
+                    class="text-2xl md:text-3xl lg:text-4xl xl:text-6xl mono uppercase"
+                  >
+                    html/css
+                  </p>
+                  <div class="w-11/20 lg:w-3/5 bg-gray-950 relative h-0.5">
+                    <div
+                      class="w-11/20 lg:w-3/5 h-full bg-white"
+                      style="width: 85%"
+                    ></div>
+                  </div>
+                </div>
+                <div
+                  class="flex flex-row my-4 md:m-4 justify-between items-center flex-nowrap"
+                >
+                  <p
+                    class="text-2xl md:text-3xl lg:text-4xl xl:text-6xl mono uppercase"
+                  >
+                    css
+                  </p>
+                  <div class="w-11/20 lg:w-3/5 bg-gray-950 relative h-0.5">
+                    <div
+                      class="w-11/20 lg:w-3/5 h-full bg-white"
+                      style="width: 80%"
+                    ></div>
+                  </div>
+                </div>
+                <div
+                  class="flex flex-row my-4 md:m-4 justify-between items-center flex-nowrap"
+                >
+                  <p
+                    class="text-2xl md:text-3xl lg:text-4xl xl:text-6xl mono uppercase"
+                  >
+                    JavaScript
+                  </p>
+                  <div class="w-11/20 lg:w-3/5 bg-gray-950 relative h-0.5">
+                    <div
+                      class="w-11/20 lg:w-3/5 h-full bg-white"
+                      style="width: 67%"
+                    ></div>
+                  </div>
+                </div>
+                <div
+                  class="flex flex-row my-4 md:m-4 justify-between items-center flex-nowrap"
+                >
+                  <p
+                    class="text-2xl md:text-3xl lg:text-4xl xl:text-6xl mono uppercase"
+                  >
+                    php
+                  </p>
+                  <div class="w-11/20 lg:w-3/5 bg-gray-950 relative h-0.5">
+                    <div
+                      class="w-11/20 lg:w-3/5 h-full bg-white"
+                      style="width: 40%"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+              <div class="flex flex-col justify-evenly content-animation">
+                <div
+                  class="flex flex-row my-4 md:m-4 justify-between items-center flex-nowrap"
+                >
+                  <p
+                    class="text-2xl md:text-3xl lg:text-4xl xl:text-6xl mono uppercase"
+                  >
+                    mysql
+                  </p>
+                  <div class="w-11/20 lg:w-3/5 bg-gray-950 relative h-0.5">
+                    <div
+                      class="w-11/20 lg:w-3/5 h-full bg-white"
+                      style="width: 30%"
+                    ></div>
+                  </div>
+                </div>
+                <div
+                  class="flex flex-row my-4 md:m-4 justify-between items-center flex-nowrap"
+                >
+                  <p
+                    class="text-2xl md:text-3xl lg:text-4xl xl:text-6xl mono uppercase"
+                  >
+                    c/c++
+                  </p>
+                  <div class="w-11/20 lg:w-3/5 bg-gray-950 relative h-0.5">
+                    <div
+                      class="w-11/20 lg:w-3/5 h-full bg-white"
+                      style="width: 55%"
+                    ></div>
+                  </div>
+                </div>
+                <div
+                  class="flex flex-row my-4 md:m-4 justify-between items-center flex-nowrap"
+                >
+                  <p
+                    class="text-2xl md:text-3xl lg:text-4xl xl:text-6xl mono uppercase"
+                  >
+                    flutter
+                  </p>
+                  <div class="w-11/20 lg:w-3/5 bg-gray-950 relative h-0.5">
+                    <div
+                      class="w-11/20 lg:w-3/5 h-full bg-white"
+                      style="width: 80%"
+                    ></div>
+                  </div>
+                </div>
+                <div
+                  class="flex flex-row my-4 md:m-4 justify-between items-center flex-nowrap"
+                >
+                  <p
+                    class="text-2xl md:text-3xl lg:text-4xl xl:text-6xl mono uppercase"
+                  >
+                    react-js
+                  </p>
+                  <div class="w-11/20 lg:w-3/5 bg-gray-950 relative h-0.5">
+                    <div
+                      class="w-11/20 lg:w-3/5 h-full bg-white"
+                      style="width: 5%"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="section4" data-index="3">
+      <div class="h-full w-full flex justify-center items-center">
+        <div
+          id="projects"
+          class="mx-12 md:mx-16 lg:mx-24 max-w-screen max-h-screen flex flex-row flex-nowrap"
+        >
+          <div>
+            <div>
+              <h2
+                class="mt-8 w-fit serif text-6xl md:text-7xl lg:text-8xl xl:text-9xl"
+              >
+                Projects
+              </h2>
+            </div>
+            <div
+              class="mt-5 lg:mt-8 grid grid-cols-1 lg:grid-cols-2 grid-rows-2"
+            >
+              <div class="mx-0 my-2 lg:mx-8 lg:my-4 content-animation">
+                <button
+                  class="relative group w-[80vw] lg:w-[35vw] h-[17vh] lg:h-[30vh] overflow-hidden rounded-2xl border-2 border-black transition-all duration-300 ease-in-out transform lg:grayscale hover:grayscale-0 hover:border-white hover:scale-105"
+                  onclick="toggleModal('modal1')"
+                  style="
+                    background-image: url('src/Images/1.webp');
+                    background-size: cover;
+                    background-position: center;
+                  "
+                >
+                  <div
+                    class="absolute bottom-2 left-1/2 transform -translate-x-1/2 text-white sans-serif font-bold text-4xl md:text-5xl xl:text-6xl text-nowrap rounded"
+                  >
+                    <p class="text-shadow-lg">Project 1</p>
+                  </div>
+                </button>
+              </div>
+              <div class="mx-0 my-2 lg:mx-8 lg:my-4 content-animation">
+                <button
+                  class="relative group w-[80vw] lg:w-[35vw] h-[17vh] lg:h-[30vh] overflow-hidden rounded-2xl border-2 border-black transition-all duration-300 ease-in-out transform lg:grayscale hover:grayscale-0 hover:border-white hover:scale-105"
+                  onclick="toggleModal('modal2')"
+                  style="
+                    background-image: url('src/Images/2.webp');
+                    background-size: cover;
+                    background-position: center;
+                  "
+                >
+                  <div
+                    class="absolute bottom-2 left-1/2 transform -translate-x-1/2 text-white text-shadow-lg sans-serif font-bold text-4xl md:text-5xl xl:text-6xl text-nowrap rounded"
+                  >
+                    Project 2
+                  </div>
+                </button>
+              </div>
+              <div class="mx-0 my-2 lg:mx-8 lg:my-4 content-animation">
+                <button
+                  class="relative group w-[80vw] lg:w-[35vw] h-[17vh] lg:h-[30vh] overflow-hidden rounded-2xl border-2 border-black transition-all duration-300 ease-in-out transform lg:grayscale hover:grayscale-0 hover:border-white hover:scale-105"
+                  onclick="toggleModal('modal3')"
+                  style="
+                    background-image: url('src/Images/3.webp');
+                    background-size: cover;
+                    background-position: center;
+                  "
+                >
+                  <div
+                    class="absolute bottom-2 left-1/2 transform -translate-x-1/2 text-shadow-lg text-white sans-serif font-bold text-4xl md:text-5xl xl:text-6xl text-nowrap rounded"
+                  >
+                    Project 3
+                  </div>
+                </button>
+              </div>
+              <div class="mx-0 my-2 lg:mx-8 lg:my-4 content-animation">
+                <button
+                  class="relative group w-[80vw] lg:w-[35vw] h-[17vh] lg:h-[30vh] overflow-hidden rounded-2xl border-2 border-black transition-all duration-300 ease-in-out transform lg:grayscale hover:grayscale-0 hover:border-white hover:scale-105"
+                  onclick="toggleModal('modal4')"
+                  style="
+                    background-image: url('src/Images/4.webp');
+                    background-size: cover;
+                    background-position: center;
+                  "
+                >
+                  <div
+                    class="absolute bottom-2 left-1/2 transform -translate-x-1/2 text-shadow-lg text-white sans-serif font-bold text-4xl md:text-5xl xl:text-6xl text-nowrap rounded"
+                  >
+                    Project 4
+                  </div>
+                </button>
+              </div>
+            </div>
+            <!-- Modal 1 -->
+            <div id="modal1" class="fixed inset-0 hidden z-50">
+              <!-- Overlay -->
+              <div
+                class="absolute inset-0 bg-black/75"
+                onclick="toggleModal('modal1')"
+              ></div>
+
+              <!-- Modal Content -->
+              <div class="flex flex-col items-center justify-center h-full">
+                <div
+                  class="relative flex flex-col items-center justify-center bg-black border-2 border-white rounded-2xl w-4/5 h-4/5 lg:w-3/5 lg:h-4/5 p-14 lg:p-14 transform transition-transform duration-300 ease-in-out scale-50"
+                  id="modalContent1"
+                >
+                  <!-- Close Button -->
+                  <button
+                    class="absolute top-2 right-4 text-white text-2xl"
+                    onclick="toggleModal('modal1')"
+                  >
+                    &times;
+                  </button>
+                  <!-- Modal Body -->
+                  <div
+                    class="flex flex-col lg:flex-row items-stretch lg:items-center"
+                  >
+                    <!-- Image Container -->
+                    <div
+                      class="flex justify-center items-center px-8 md:px-10 lg:px-0"
+                    >
+                      <img
+                        src="src/Images/sq1.webp"
+                        alt="Modal Image"
+                        class="w-auto h-full max-h-[100vh] object-cover rounded-lg"
+                      />
+                    </div>
+                    <!-- Text Content -->
+                    <div
+                      class="w-full h-full mt-6 lg:mt-0 lg:ml-8 flex flex-col justify-start items-start"
+                    >
+                      <h2
+                        class="text-3xl md:text-4xl font-bold text-white serif mb-4"
+                      >
+                        Modal Title
+                      </h2>
+                      <p
+                        class="text-lg/6 md:text-xl lg:text-2xl text-white sans-serif"
+                      >
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Adipisci quas dignissimos ratione labore ipsum nesciunt
+                        vel. Incidunt qui labore aliquid atque voluptates. Dicta
+                        libero officiis recusandae corrupti iste, amet voluptas?
+                        Lorem ipsum dolor sit amet consectetur, adipisicing
+                        elit. Perspiciatis et nam alias dicta adipisci fuga ea,
+                        quia a, mollitia iure doloremque illum ullam minus
+                        maiores reiciendis optio recusandae voluptatem? Dolorem?
+                      </p>
+                      <button
+                        class="my-4 rounded-2xl border-2 border-slate-300 py-2 lg:py-3 px-6 lg:px-14 text-center text-lg lg:text-2xl text-nowrap font-normal transition-all shadow-sm hover:shadow-lg text-slate-50 hover:text-black hover:bg-slate-50 hover:border-slate-50 focus:text-white focus:bg-slate-50 focus:border-slate-50 active:border-slate-50 active:text-black active:bg-slate-50 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                        type="button"
+                      >
+                        CHECK IT OUT!
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Modal 2 -->
+            <div id="modal2" class="fixed inset-0 hidden z-50">
+              <!-- Overlay -->
+              <div
+                class="absolute inset-0 bg-black/75"
+                onclick="toggleModal('modal2')"
+              ></div>
+
+              <!-- Modal Content -->
+              <div class="flex flex-col items-center justify-center h-full">
+                <div
+                  class="relative flex flex-col items-center justify-center bg-black border-2 border-white rounded-2xl w-4/5 h-4/5 lg:w-3/5 lg:h-4/5 p-14 lg:p-14 transform transition-transform duration-300 ease-in-out scale-50"
+                  id="modalContent1"
+                >
+                  <!-- Close Button -->
+                  <button
+                    class="absolute top-2 right-4 text-white text-2xl"
+                    onclick="toggleModal('modal2')"
+                  >
+                    &times;
+                  </button>
+                  <!-- Modal Body -->
+                  <div
+                    class="flex flex-col lg:flex-row items-stretch lg:items-center"
+                  >
+                    <!-- Image Container -->
+                    <div class="flex justify-center items-center px-8 lg:px-0">
+                      <img
+                        src="src/Images/sq2.webp"
+                        alt="Modal Image"
+                        class="w-auto h-full max-h-[100vh] object-cover rounded-lg"
+                      />
+                    </div>
+                    <!-- Text Content -->
+                    <div
+                      class="w-full h-full mt-6 lg:mt-0 lg:ml-8 flex flex-col justify-start items-start"
+                    >
+                      <h2
+                        class="text-3xl lg:text-4xl font-bold text-white serif mb-4"
+                      >
+                        Modal Title
+                      </h2>
+                      <p class="text-lg/6 lg:text-2xl text-white sans-serif">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Adipisci quas dignissimos ratione labore ipsum nesciunt
+                        vel. Incidunt qui labore aliquid atque voluptates. Dicta
+                        libero officiis recusandae corrupti iste, amet voluptas?
+                        Lorem ipsum dolor sit amet consectetur, adipisicing
+                        elit. Perspiciatis et nam alias dicta adipisci fuga ea,
+                        quia a, mollitia iure doloremque illum ullam minus
+                        maiores reiciendis optio recusandae voluptatem? Dolorem?
+                      </p>
+                      <button
+                        class="my-4 rounded-2xl border-2 border-slate-300 py-2 lg:py-3 px-6 lg:px-14 text-center text-lg lg:text-2xl text-nowrap font-normal transition-all shadow-sm hover:shadow-lg text-slate-50 hover:text-black hover:bg-slate-50 hover:border-slate-50 focus:text-white focus:bg-slate-50 focus:border-slate-50 active:border-slate-50 active:text-black active:bg-slate-50 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                        type="button"
+                      >
+                        CHECK IT OUT!
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Modal 3 -->
+            <div id="modal3" class="fixed inset-0 hidden z-50">
+              <!-- Overlay -->
+              <div
+                class="absolute inset-0 bg-black/75"
+                onclick="toggleModal('modal3')"
+              ></div>
+
+              <!-- Modal Content -->
+              <div class="flex flex-col items-center justify-center h-full">
+                <div
+                  class="relative flex flex-col items-center justify-center bg-black border-2 border-white rounded-2xl w-4/5 h-4/5 lg:w-3/5 lg:h-4/5 p-14 lg:p-14 transform transition-transform duration-300 ease-in-out scale-50"
+                  id="modalContent1"
+                >
+                  <!-- Close Button -->
+                  <button
+                    class="absolute top-2 right-4 text-white text-2xl"
+                    onclick="toggleModal('modal3')"
+                  >
+                    &times;
+                  </button>
+                  <!-- Modal Body -->
+                  <div
+                    class="flex flex-col lg:flex-row items-stretch lg:items-center"
+                  >
+                    <!-- Image Container -->
+                    <div class="flex justify-center items-center px-8 lg:px-0">
+                      <img
+                        src="src/Images/sq3.webp"
+                        alt="Modal Image"
+                        class="w-auto h-full max-h-[100vh] object-cover rounded-lg"
+                      />
+                    </div>
+                    <!-- Text Content -->
+                    <div
+                      class="w-full h-full mt-6 lg:mt-0 lg:ml-8 flex flex-col justify-start items-start"
+                    >
+                      <h2
+                        class="text-3xl lg:text-4xl font-bold text-white serif mb-4"
+                      >
+                        Modal Title
+                      </h2>
+                      <p class="text-lg/6 lg:text-2xl text-white sans-serif">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Adipisci quas dignissimos ratione labore ipsum nesciunt
+                        vel. Incidunt qui labore aliquid atque voluptates. Dicta
+                        libero officiis recusandae corrupti iste, amet voluptas?
+                        Lorem ipsum dolor sit amet consectetur, adipisicing
+                        elit. Perspiciatis et nam alias dicta adipisci fuga ea,
+                        quia a, mollitia iure doloremque illum ullam minus
+                        maiores reiciendis optio recusandae voluptatem? Dolorem?
+                      </p>
+                      <button
+                        class="my-4 rounded-2xl border-2 border-slate-300 py-2 lg:py-3 px-6 lg:px-14 text-center text-lg lg:text-2xl text-nowrap font-normal transition-all shadow-sm hover:shadow-lg text-slate-50 hover:text-black hover:bg-slate-50 hover:border-slate-50 focus:text-white focus:bg-slate-50 focus:border-slate-50 active:border-slate-50 active:text-black active:bg-slate-50 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                        type="button"
+                      >
+                        CHECK IT OUT!
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Modal 4 -->
+            <div id="modal4" class="fixed inset-0 hidden z-50">
+              <!-- Overlay -->
+              <div
+                class="absolute inset-0 bg-black/75"
+                onclick="toggleModal('modal4')"
+              ></div>
+
+              <!-- Modal Content -->
+              <div class="flex flex-col items-center justify-center h-full">
+                <div
+                  class="relative flex flex-col items-center justify-center bg-black border-2 border-white rounded-2xl w-4/5 h-4/5 lg:w-3/5 lg:h-4/5 p-14 lg:p-14 transform transition-transform duration-300 ease-in-out scale-50"
+                  id="modalContent1"
+                >
+                  <!-- Close Button -->
+                  <button
+                    class="absolute top-2 right-4 text-white text-2xl"
+                    onclick="toggleModal('modal4')"
+                  >
+                    &times;
+                  </button>
+                  <!-- Modal Body -->
+                  <div
+                    class="flex flex-col lg:flex-row items-stretch lg:items-center"
+                  >
+                    <!-- Image Container -->
+                    <div class="flex justify-center items-center px-8 lg:px-0">
+                      <img
+                        src="src/Images/sq4.webp"
+                        alt="Modal Image"
+                        class="w-auto h-full max-h-[100vh] object-cover rounded-lg"
+                      />
+                    </div>
+                    <!-- Text Content -->
+                    <div
+                      class="w-full h-full mt-6 lg:mt-0 lg:ml-8 flex flex-col justify-start items-start"
+                    >
+                      <h2
+                        class="text-3xl lg:text-4xl font-bold text-white serif mb-4"
+                      >
+                        Modal Title
+                      </h2>
+                      <p class="text-lg/6 lg:text-2xl text-white sans-serif">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Adipisci quas dignissimos ratione labore ipsum nesciunt
+                        vel. Incidunt qui labore aliquid atque voluptates. Dicta
+                        libero officiis recusandae corrupti iste, amet voluptas?
+                        Lorem ipsum dolor sit amet consectetur, adipisicing
+                        elit. Perspiciatis et nam alias dicta adipisci fuga ea,
+                        quia a, mollitia iure doloremque illum ullam minus
+                        maiores reiciendis optio recusandae voluptatem? Dolorem?
+                      </p>
+                      <button
+                        class="my-4 rounded-2xl border-2 border-slate-300 py-2 lg:py-3 px-6 lg:px-14 text-center text-lg lg:text-2xl text-nowrap font-normal transition-all shadow-sm hover:shadow-lg text-slate-50 hover:text-black hover:bg-slate-50 hover:border-slate-50 focus:text-white focus:bg-slate-50 focus:border-slate-50 active:border-slate-50 active:text-black active:bg-slate-50 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                        type="button"
+                      >
+                        CHECK IT OUT!
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="section5" data-index="4">
+      <div class="h-full w-full flex justify-center items-center">
+        <div
+          id="contact"
+          class="mx-12 lg:mx-24 xl:mx-48 p-0 lg:py-12 xl:py-24 max-w-screen max-h-screen flex flex-col lg:flex-row flex-nowrap"
+        >
+          <div
+            class="m-0 lg:ml-40 max-w-[50vh] lg:max-w-full flex flex-col justify-between items-start"
+          >
+            <div>
+              <h2
+                class="w-fit serif text-6xl md:text-7xl lg:text-8xl xl:text-9xl"
+              >
+                Contact Me
+              </h2>
+            </div>
+            <div class="content-animation h-fit box-border">
+              <form
+                class="flex flex-col my-4 box-border border-2 border-white rounded-2xl p-4 pb-16 md:pb-24 lg:pb-32 xl:pb-64 h-fit md:h-[40vh] lg:h-[65vh] w-[80vw] md:w-[60vw] lg:w-[35vw]"
+              >
+                <div class="flex flex-row justify-between items-center">
+                  <label
+                    for="name"
+                    class="text-xl md:text-2xl lg:text-3xl xl:text-4xl m-2 lg:m-4 xl:m-8 mono"
+                    >Name:</label
+                  >
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    class="border-2 m-2 lg:m-4 xl:m-8 w-[60%] h-fit border-white mono text-lg lg:text-xl xl:text-2xl rounded-2xl p-2"
+                  />
+                </div>
+                <div class="flex flex-row justify-between items-center">
+                  <label
+                    for="email"
+                    class="text-xl md:text-2xl lg:text-3xl xl:text-4xl m-2 lg:m-4 xl:m-8 mono"
+                    >Email:</label
+                  >
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    class="border-2 m-2 lg:m-4 xl:m-8 w-[60%] h-fit border-white mono text-lg lg:text-xl xl:text-2xl rounded-2xl p-2"
+                  />
+                </div>
+                <div class="flex flex-row justify-between items-center">
+                  <label
+                    for="subject"
+                    class="text-xl md:text-2xl lg:text-3xl xl:text-4xl m-2 lg:m-4 xl:m-8 mono"
+                    >Subject:</label
+                  >
+                  <input
+                    type="text"
+                    id="subject"
+                    name="subject"
+                    class="border-2 m-2 lg:m-4 xl:m-8 w-[60%] h-fit border-white mono text-lg lg:text-xl xl:text-2xl rounded-2xl p-2"
+                  />
+                </div>
+                <!-- Updated message row: label and textarea inline -->
+                <div class="flex flex-row items-start flex-grow">
+                  <label
+                    for="message"
+                    class="text-xl md:text-2xl lg:text-3xl xl:text-4xl m-2 lg:m-4 xl:m-8 mono flex-shrink-0 self-center"
+                  >
+                    Message:
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    class="flex-1 h-full min-h-0 border-2 m-2 lg:m-4 xl:m-8 border-white mono text-lg lg:text-xl xl:text-2xl rounded-2xl p-2 resize-none"
+                  ></textarea>
+                </div>
+                <button
+                  class="fixed bottom-8 lg:bottom-4 right-5 m-1 lg:m-4 lg:mb-8 xl:mb-16 rounded-2xl border-2 border-slate-300 py-1 lg:py-3 px-8 lg:px-14 text-center text-lg lg:text-2xl xl:text-3xl font-normal transition-all shadow-sm hover:shadow-lg text-slate-50 hover:text-black hover:bg-slate-50 hover:border-slate-50 focus:text-white focus:bg-slate-50 focus:border-slate-50 active:border-slate-50 active:text-black active:bg-slate-50 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                  type="submit"
+                >
+                  SEND
+                </button>
+              </form>
+            </div>
+          </div>
+          <div
+            class="lg:pl-40 lg:pr-20 py-6 lg:py-15 lg:m-40 border-t-1 lg:border-l-1 lg:border-t-0 border-neutral-800 flex flex-col justify-start items-start"
+          >
+            <div class="content-animation">
+              <p
+                class="py-4 text-3xl md:text-4xl text-nowrap h-fit w-fit mono text-white"
+              >
+                Lets get connected:
+              </p>
+              <div class="text-nowrap sans-serif text-xl">
+                <span class="text-zinc-500">Email:</span>&ensp;<span
+                  >yourname123@gmail.com</span
+                >
+              </div>
+            </div>
+            <div
+              class="mt-4 w-full flex flex-row justify-between content-animation"
+            >
+              <a
+                class="p-0.5 mr-4 my-4 text-lg hover:bg-white hover:text-black mono"
+                href="linkedin.com"
+                >LinkedIn</a
+              >
+              <a
+                class="p-0.5 m-4 text-lg hover:bg-white hover:text-black mono"
+                href="github.com"
+                >Github</a
+              >
+              <a
+                class="p-0.5 m-4 text-lg hover:bg-white hover:text-black mono"
+                href="instagram.com"
+                >Instagram</a
+              >
+            </div>
+          </div>
+        </div>
+        <div
+          class="fixed bottom-0 left-0 p-1 lg:p-2 border-t-1 border-neutral-800 w-full flex justify-center items-center"
+        >
+          <p class="text-zinc-500 sans-serif">
+            © 2025 Your Name. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </section>
+    <!-- <script>
+      const menuIcon = document.getElementById("menu-icon");
+      const navMenu = document.getElementById("nav-menu");
+      const navLinks = navMenu.querySelectorAll("a");
+  
+      // Toggle menu
+      menuIcon.addEventListener("click", () => {
+        navMenu.classList.toggle("show");
+      });
+  
+      // Close menu when clicking a link
+      navLinks.forEach(link => {
+        link.addEventListener("click", () => {
+          navMenu.classList.remove("show");
+        });
+      });
+    </script> -->
+    <script>
+      if (!("ontouchstart" in window || navigator.maxTouchPoints > 0)) {
+        const dot = document.querySelector(".cursor");
+        const circle = document.querySelector(".hover-effect");
+
+        // These variables will store the target mouse position
+        let cursorX = window.innerWidth / 2;
+        let cursorY = window.innerHeight / 2;
+
+        // Current position of the circle (starts at the center)
+        let circleX = cursorX;
+        let circleY = cursorY;
+
+        // Listen for mouse movement
+        document.addEventListener("mousemove", (e) => {
+          // Update target mouse position
+          cursorX = e.clientX;
+          cursorY = e.clientY;
+
+          // Instantly position the dot exactly at the cursor
+          dot.style.left = `${cursorX}px`;
+          dot.style.top = `${cursorY}px`;
+        });
+
+        // Animate the circle to follow the dot with a smooth easing effect
+        function animateCircle() {
+          // Lerp the circle's position toward the target mouse position
+          circleX += (cursorX - circleX) * 0.085;
+          circleY += (cursorY - circleY) * 0.085;
+
+          // Position the circle (its CSS transform should center it via translate(-50%, -50%))
+          circle.style.left = `${circleX}px`;
+          circle.style.top = `${circleY}px`;
+
+          requestAnimationFrame(animateCircle);
+        }
+
+        // Start the animation loop
+        animateCircle();
+
+        // When the mouse enters the viewport, add a class that hides the system cursor globally
+        document.addEventListener("mouseenter", () => {
+          document.body.classList.add("hide-cursor");
+          dot.style.display = "block";
+          circle.style.display = "block";
+        });
+
+        // When the mouse leaves the viewport, remove the class to restore the system cursor
+        document.addEventListener("mouseleave", () => {
+          document.body.classList.remove("hide-cursor");
+          dot.style.display = "none";
+          circle.style.display = "none";
+        });
+
+        // Add hover effect when over interactive elements
+        document.querySelectorAll("a, button").forEach((el) => {
+          el.addEventListener("mouseenter", () => dot.classList.add("hovered"));
+          el.addEventListener("mouseleave", () =>
+            dot.classList.remove("hovered")
+          );
+        });
+
+        // For input fields and textareas, change the cursor into a typing indicator.
+        document.querySelectorAll("input, textarea").forEach((element) => {
+          element.addEventListener("mouseenter", () => {
+            // Remove any hover effect, then add the typing-indicator style.
+            circle.classList.add("contracted");
+            dot.classList.add("typing-indicator");
+          });
+          element.addEventListener("mouseleave", () => {
+            dot.classList.remove("typing-indicator");
+            circle.classList.remove("contracted");
+          });
+        });
+      }
+    </script>
+    <script src="./dist/main.min.js"></script>
+  </body>
+</html>
